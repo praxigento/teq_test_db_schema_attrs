@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# this project files
+/.idea/
+/atlassian-ide-plugin.xml
