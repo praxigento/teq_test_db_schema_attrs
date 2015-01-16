@@ -1,0 +1,33 @@
+{
+    "domain": {
+        "attrs_total": 50,
+        "attrs_per_instance_min": 3,
+        "attrs_per_instance_max": 5,
+        "attr_types": {
+            "int": {},
+            "decimal": {},
+            "string": {},
+            "text": {}
+        },
+        "instances_total": 1000
+    },
+    "operations": {
+        "get_instance": {
+            "count": 100
+        },
+        "get_by_filter": {
+            "count": 100,
+            "attrs_in_filter_max": 5
+        },
+        "get_sorted": {
+            "count": 100,
+            "attrs_to_sort_max": 5
+        },
+        "get_paged": {
+            "count": 100,
+            "attrs_in_filter_max": 4,
+            "attrs_to_sort_max": 3,
+            "page_size": 10
+        }
+    }
+}
