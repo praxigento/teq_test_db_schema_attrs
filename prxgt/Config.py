@@ -4,26 +4,26 @@ import logging
 
 
 class Config:
-    filename = None
-    data = None
+    _filename = None
+    _data = None
 
     def __init__(self, filename='config.json'):
-        self.filename = filename
+        self._filename = filename
 
     def load(self):
-        cfg_file = open(self.filename)
-        self.data = json.load(cfg_file)
-        logging.info("configuration is loaded from file '%s'.", self.filename)
+        cfg_file = open(self._filename)
+        self._data = json.load(cfg_file)
+        logging.info("configuration is loaded from file '%s'.", self._filename)
         cfg_file.close()
 
-    def getDomAttrsTotal(self):
-        return self.data['domain']['attrs_total']
+    def get_dom_attrs_total(self):
+        return self._data['domain']['attrs_total']
 
-    def getDomAttrsPerInstanceMin(self):
-        return self.data['domain']['attrs_per_instance_min']
+    def get_dom_attrs_per_instance_min(self):
+        return self._data['domain']['attrs_per_instance_min']
 
-    def getDomAttrsPerInstanceMax(self):
-        return self.data['domain']['attrs_per_instance_max']
+    def get_dom_attrs_per_instance_max(self):
+        return self._data['domain']['attrs_per_instance_max']
 
-    def getDomInstTotal(self):
-        return self.data['domain']['instances_total']
+    def get_dom_inst_total(self):
+        return self._data['domain']['instances_total']
