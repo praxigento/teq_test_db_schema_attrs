@@ -1,8 +1,8 @@
 {
     "domain": {
         "attrs_total": 50,
-        "attrs_per_instance_min": 3,
-        "attrs_per_instance_max": 5,
+        "attrs_per_instance_min": 2,
+        "attrs_per_instance_max": 10,
         "attr_types": {
             "int": {},
             "decimal": {},

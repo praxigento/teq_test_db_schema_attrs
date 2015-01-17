@@ -24,3 +24,6 @@ class Config:
 
     def getDomAttrsPerInstanceMax(self):
         return self.data['domain']['attrs_per_instance_max']
+
+    def getDomInstTotal(self):
+        return self.data['domain']['instances_total']
