@@ -9,7 +9,7 @@
             "string": {},
             "text": {}
         },
-        "instances_total": 1000
+        "instances_total": 10
     },
     "operations": {
         "get_instance": {

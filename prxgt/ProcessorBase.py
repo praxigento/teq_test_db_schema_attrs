@@ -4,9 +4,9 @@ from abc import ABCMeta, abstractmethod
 
 class ProcessorBase(metaclass=ABCMeta):
     @abstractmethod
-    def add_entity_instance(self, attrs):
+    def add_entity_instance(self, inst):
         """
         Add new instance to storage.
-        :param attrs: attributes for new instance
+        :param inst: attributes for new instance
         :return:
         """

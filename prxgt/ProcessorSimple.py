@@ -6,9 +6,11 @@ class ProcessorSimple(ProcessorBase):
     """
     Simple in-memory storage processor.
     """
+    """In-memory storage for all instances."""
+    storage = None
 
-    def add_entity_instance(self, attrs):
-        super().add_entity_instance(attrs)
+    def add_entity_instance(self, inst):
+        super().add_entity_instance(inst)
 
 
 ProcessorBase.register(ProcessorSimple)
