@@ -13,7 +13,7 @@ class Config:
     def load(self):
         cfg_file = open(self._filename)
         self._data = json.load(cfg_file)
-        logging.info("configuration is loaded from file '%s'.", self._filename)
+        logging.info("configuration is loaded from file '%s';", self._filename)
         cfg_file.close()
 
     def get_dom_attrs_total(self):
@@ -30,3 +30,9 @@ class Config:
 
     def get_oper_inst_count(self):
         return self._data['operations']['get_instance']['count']
+
+    def get_oper_filter_count(self):
+        return self._data['operations']['get_by_filter']['count']
+
+    def get_oper_filter_attrs_max(self):
+        return self._data['operations']['get_by_filter']['attrs_in_filter_max']

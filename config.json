@@ -9,25 +9,26 @@
             "string": {},
             "text": {}
         },
-        "instances_total": 10
+        "instances_total": 100
     },
     "operations": {
         "get_instance": {
-            "count": 1000
+            "count": 100
         },
         "get_by_filter": {
             "count": 100,
             "attrs_in_filter_max": 5
         },
-        "get_sorted": {
+        "get_ordered": {
             "count": 100,
-            "attrs_to_sort_max": 5
+            "attrs_to_order_max": 5
         },
         "get_paged": {
             "count": 100,
             "attrs_in_filter_max": 4,
-            "attrs_to_sort_max": 3,
+            "attrs_to_order_max": 3,
             "page_size": 10
         }
-    }
+    },
+    "results": {}
 }

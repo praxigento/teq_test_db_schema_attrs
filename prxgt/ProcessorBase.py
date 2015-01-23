@@ -12,9 +12,33 @@ class ProcessorBase(metaclass=ABCMeta):
         """
 
     @abstractmethod
-    def get_inst_by_id(self, id):
+    def get_inst_by_id(self, instance_id):
         """
-        Select and return instance with attrs by id.
-        :param id:
+        Return instance with attrs by instance_id.
+        :param instance_id:
+        :return:
+        """
+
+    @abstractmethod
+    def get_list_by_filter(self, filter_data):
+        """
+        Return list of instances filtered by filter_data.
+        :param filter_data:
+        :return:
+        """
+
+    @abstractmethod
+    def get_list_ordered(self, filter_data, order_data):
+        """
+        Return ordered list of instances filtered by filter_data.
+        :param filter_data:
+        :return:
+        """
+
+    @abstractmethod
+    def get_list_paged(self, filter_data, order_data, pages_data):
+        """
+        Return paged and ordered list of instances filtered by filter_data.
+        :param filter_data:
         :return:
         """

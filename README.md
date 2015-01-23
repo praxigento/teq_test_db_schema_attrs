@@ -19,46 +19,18 @@ Test environment for comparison of the different schemas for entity with variabl
 
 ## Configuration file
 
-    {
-        "domain": {},
-        "operations": {}
-    }
+[Read more](docs/config.md)
 
-### Domain definition
+## Operations
 
-    "domain": {
-            "attrs_total": 50,
-            "attrs_per_instance_min": 2,
-            "attrs_per_instance_max": 10,
-            "attr_types": {
-                "int": {},
-                "decimal": {},
-                "string": {},
-                "text": {}
-            },
-            "instances_total": 10
-    }
+### Get instance by id
+Select random instance with all attributes by ID.
 
-* **attrs_total**: total number of the all
+### Get instances by filter
+Select set of instances filtered by attributes.
 
-### Data manipulations
+### Get ordered instances 
+Select set of instances filtered and ordered by attributes.
 
-    "operations": {
-        "get_instance": {
-            "count": 100
-        },
-        "get_by_filter": {
-            "count": 100,
-            "attrs_in_filter_max": 5
-        },
-        "get_sorted": {
-            "count": 100,
-            "attrs_to_sort_max": 5
-        },
-        "get_paged": {
-            "count": 100,
-            "attrs_in_filter_max": 4,
-            "attrs_to_sort_max": 3,
-            "page_size": 10
-        }
-    }
+### Get paged instances
+Select paged set of instances filtered and ordered by attributes.

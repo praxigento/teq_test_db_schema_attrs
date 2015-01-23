@@ -3,8 +3,6 @@ import logging
 import string
 import random
 import time
-from pprint import pprint
-
 from prxgt.dom.Attribute import Attribute
 from prxgt.ProcessorSimple import ProcessorSimple
 
@@ -36,31 +34,40 @@ class App:
         return
 
     def _save_results(self):
-        logging.info("save results to file.")
+        logging.info("save results to file;")
         return
 
     def _init_config(self):
         self._config.load()
         # TODO: validation rules
         # - attrs min & max should comply with attrs total
-        logging.info("total different attributes for entity: %i", self._config.get_dom_attrs_total())
-        logging.info("min different attributes per one instance: %i", self._config.get_dom_attrs_per_instance_min())
-        logging.info("max different attributes per one instance: %i", self._config.get_dom_attrs_per_instance_max())
         return
 
     def _operations(self):
         logging.info("call data access operations:")
         self._oper_get_instance()
+        self._oper_get_by_filter()
+        self._get_ordered()
+        self._get_paged()
         return
+
+
+    def _get_ordered(self):
+        logging.info("\tget set of the ordered instances:")
+        pass
+
+    def _get_paged(self):
+        logging.info("\tget paged set of the ordered instances by filter:")
+        pass
 
     def _oper_get_instance(self):
         """
         Test instance with all attributes getting from storage.
         :return:
         """
+        logging.info("\tget instance with attributes by id:")
         total_instances = self._config.get_dom_inst_total()
         iterations = self._config.get_oper_inst_count()
-        logging.info("\tget instance with attributes by id:")
         start_time = time.time()
         for i in range(iterations):
             # generate random ID from available IDs range
@@ -69,8 +76,20 @@ class App:
             # should we validate instance data?
             pass
         time_total = time.time() - start_time
-        logging.info("\t\t%i iterations are done in %.3f; sec.", iterations, time_total)
+        logging.info("\t\t%i iterations are done in %.3f sec;", iterations, time_total)
         return
+
+    def _oper_get_by_filter(self):
+        logging.info("\tget instances by filter:")
+        iterations = self._config.get_oper_filter_count()
+        attrs_max = self._config.get_oper_filter_attrs_max()
+        start_time = time.time()
+        for i in range(iterations):
+            self._proc.get_list_by_filter(423)
+            pass
+        time_total = time.time() - start_time
+        logging.info("\t\t%i iterations are done in %.3f sec;", iterations, time_total)
+        pass
 
     def _get_random_type(self):
         """
@@ -100,7 +119,7 @@ class App:
         return result
 
     def _init_attrs(self):
-        logging.info("create registry for available attributes.")
+        logging.info("create registry for available attributes;")
         for i in range(self._config.get_dom_attrs_total()):
             key = "a" + repr(i)
             attr = Attribute()
@@ -114,12 +133,18 @@ class App:
         Create entity instances in storage according to selected scheme and register
         used attributes.
         """
-        logging.info("create instances using simple data processor.")
+        logging.info("create instances using simple data processor:")
         attrs_total = self._config.get_dom_attrs_total()
         attrs_min = self._config.get_dom_attrs_per_instance_min()
         attrs_max = self._config.get_dom_attrs_per_instance_max()
         attr_names_avlb = list(self._attrs_available.keys())
         inst_total = self._config.get_dom_inst_total()
+
+        logging.info("\ttotal different attributes for entity: %i;", attrs_total)
+        logging.info("\tmin different attributes per one instance: %i;", attrs_min)
+        logging.info("\tmax different attributes per one instance: %i;", attrs_max)
+        logging.info("\ttotal instances in storage: %i;", inst_total)
+
         for i in range(inst_total):
             inst = {}
             # get number of the attrs for current instance
@@ -137,7 +162,7 @@ class App:
                 attr.value = self._get_value_by_type(attr_selected.type)
                 inst[attr.name] = attr
             self._proc.add_entity_inst(inst)
-        logging.info("total %i instances are created, %i different attributes are used", inst_total,
+        logging.info("\ttotal %i instances are created, %i different attributes are used;", inst_total,
                      len(self._attrs_used))
         # pprint(self._proc.storage)
         return

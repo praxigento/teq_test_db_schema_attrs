@@ -8,15 +8,16 @@ to save results.
 
     {
         "domain": {
-            "attrs_total": 100,
-            "attrs_per_instance": 5,
+            "attrs_total": 50,
+            "attrs_per_instance_min": 2,
+            "attrs_per_instance_max": 10,
             "attr_types": {
                 "int": {},
                 "decimal": {},
                 "string": {},
                 "text": {}
             },
-            "instances_total": 1000
+            "instances_total": 100
         },
         "operations": {
             "get_instance": {
@@ -26,14 +27,14 @@ to save results.
                 "count": 100,
                 "attrs_in_filter_max": 5
             },
-            "get_sorted": {
+            "get_ordered": {
                 "count": 100,
-                "attrs_to_sort_max": 5
+                "attrs_to_order_max": 5
             },
             "get_paged": {
                 "count": 100,
                 "attrs_in_filter_max": 4,
-                "attrs_to_sort_max": 3,
+                "attrs_to_order_max": 3,
                 "page_size": 10
             }
         },
@@ -51,12 +52,12 @@ to save results.
     * **get_by_filter**: get all instances by filter;
         * **count**: total number of the iterations;
         * **attrs_in_filter_max**: max number of the attributes in filter;
-    * **get_sorted**: get all instances ordered by some attributes;
+    * **get_ordered**: get all instances ordered by some attributes;
         * **count**: total number of the iterations;
-        * **attrs_to_sort_max**: max number of the attributes to order; 
-    * **get_paged**: get one page from filtered and sorted set of instances;
+        * **attrs_to_order_max**: max number of the attributes to order; 
+    * **get_paged**: get one page from filtered and ordered set of instances;
         * **count**: total number of the iterations;
         * **attrs_in_filter_max**: max number of the attributes in filter;
-        * **attrs_to_sort_max**: max number of the attributes to order;
+        * **attrs_to_order_max**: max number of the attributes to order;
         * **page_size**: count of the items on the page;
 * **results**: configuration for results storing;
