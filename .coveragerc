@@ -1,0 +1,2 @@
+[run]
+omit = prxgt/test*.py

@@ -13,7 +13,7 @@
     },
     "operations": {
         "get_instance": {
-            "count": 100
+            "count": 1000
         },
         "get_by_filter": {
             "count": 100,

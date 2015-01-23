@@ -27,3 +27,6 @@ class Config:
 
     def get_dom_inst_total(self):
         return self._data['domain']['instances_total']
+
+    def get_oper_inst_count(self):
+        return self._data['operations']['get_instance']['count']
