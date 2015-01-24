@@ -1,8 +1,16 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
+import prxgt.dom.Attribute as Attr
 
 
 class Filter:
-    def __init__(self, attr=None, cond=None, value=None):
+    def __init__(self, attr: Attr.Attribute=None, cond=None, value=None):
+        """
+
+        :param attr:
+        :param cond:
+        :param value:
+        :return:
+        """
         self.attr = attr
         self.condition = cond
         self.value = value
