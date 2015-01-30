@@ -8,7 +8,7 @@ class Test(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_all(self):
+    def test_properties(self):
         name = 'Name'
         type_ = 'Type'
         value = 123

@@ -1,19 +1,19 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 from prxgt.proc.base import ProcessorBase
+from prxgt.domain.filter import Filter
 
 
-class ProcessorSimple(ProcessorBase):
+class SimpleProcessor(ProcessorBase):
     """
     Simple in-memory storage processor.
     """
+
     """In-memory storage for all instances."""
     _storage = []
 
     def get_list_paged(self, filter_data, order_data, pages_data):
         super().get_list_paged(filter_data, order_data, pages_data)
 
-    def get_list_by_filter(self, filter_data):
-        super().get_list_by_filter(filter_data)
 
     def get_list_ordered(self, filter_data, order_data):
         super().get_list_ordered(filter_data, order_data)
@@ -26,5 +26,8 @@ class ProcessorSimple(ProcessorBase):
         result = self._storage[instance_id]
         return result
 
+    def get_list_by_filter(self, filter_: Filter):
+        super().get_list_by_filter(filter_)
 
-ProcessorBase.register(ProcessorSimple)
+
+ProcessorBase.register(SimpleProcessor)

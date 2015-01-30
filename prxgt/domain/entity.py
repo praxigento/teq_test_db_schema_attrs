@@ -7,9 +7,12 @@ class Entity:
     Entity instance representation.
     """
 
-    def __init__(self, id_=None, attrs={}):
+    def __init__(self, id_=None, attrs=None):
         self._id = id_
-        self._attrs = attrs
+        if attrs is None:
+            self._attrs = {}
+        else:
+            self._attrs = attrs
         pass
 
     @property

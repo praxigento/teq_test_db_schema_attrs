@@ -1,18 +1,15 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
-import prxgt.domain.attribute as Attr
+from prxgt.domain.attribute import Attribute
 
 
 class Filter:
-    def __init__(self, attr: Attr.Attribute=None, cond=None, value=None):
-        """
+    """
+    Filter contains a set of the conditions.
+    """
 
-        :param attr:
-        :param cond:
-        :param value:
-        :return:
-        """
+    def __init__(self, attr: Attribute, condition, value):
         self._attr = attr
-        self._condition = cond
+        self._condition = condition
         self._value = value
 
     @property
@@ -20,7 +17,7 @@ class Filter:
         return self._attr
 
     @attr.setter
-    def attr(self, val):
+    def attr(self, val: Attribute):
         self._attr = val
 
     @property

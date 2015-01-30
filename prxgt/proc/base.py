@@ -1,6 +1,8 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 from abc import ABCMeta, abstractmethod
 
+from prxgt.domain.filter import Filter
+
 
 class ProcessorBase(metaclass=ABCMeta):
     @abstractmethod
@@ -20,10 +22,10 @@ class ProcessorBase(metaclass=ABCMeta):
         """
 
     @abstractmethod
-    def get_list_by_filter(self, filter_data):
+    def get_list_by_filter(self, filter_: Filter):
         """
         Return list of instances filtered by filter_data.
-        :param filter_data:
+        :param filter_:
         :return:
         """
 

@@ -11,14 +11,19 @@ class Test(unittest.TestCase):
 
     def test_properties(self):
         id_ = 4
+        attrs = {'a1': Attribute('a1', ATTR_TYPE_INT, 23), 'a2': Attribute('a2', ATTR_TYPE_DEC, 2.3),
+                 'a3': Attribute('a3', ATTR_TYPE_STR, 'string')}
+        # constructor w/o params
         inst = Entity()
         self.assertIsNotNone(inst)
         self.assertIsNone(inst.id)
         inst.id = id_
         self.assertEqual(id_, inst.id)
-        attrs = {'a1': Attribute('a1', ATTR_TYPE_INT, 23), 'a2': Attribute('a2', ATTR_TYPE_DEC, 2.3),
-                 'a3': Attribute('a3', ATTR_TYPE_STR, 'string')}
         inst.attrs = attrs
+        self.assertEqual(attrs, inst.attrs)
+        # constructor with params
+        inst = Entity(id_, attrs)
+        self.assertEqual(id_, inst.id)
         self.assertEqual(attrs, inst.attrs)
         pass
 
