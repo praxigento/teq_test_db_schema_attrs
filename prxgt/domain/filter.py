@@ -1,5 +1,5 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
-import prxgt.dom.Attribute as Attr
+import prxgt.domain.attribute as Attr
 
 
 class Filter:
@@ -11,9 +11,9 @@ class Filter:
         :param value:
         :return:
         """
-        self.attr = attr
-        self.condition = cond
-        self.value = value
+        self._attr = attr
+        self._condition = cond
+        self._value = value
 
     @property
     def attr(self):

@@ -1,2 +1,7 @@
 [run]
-omit = prxgt/test*.py
+omit =
+    prxgt/test*
+    prxgt/domain/test*
+    prxgt/proc/test*
+    prxgt/report/test*
+

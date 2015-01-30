@@ -1,9 +1,10 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import unittest
-from prxgt.Filter import Filter
+
+from prxgt.domain.filter import Filter
 
 
-class TestFilter(unittest.TestCase):
+class Test(unittest.TestCase):
     def setUp(self):
         pass
 

@@ -1,0 +1,39 @@
+__author__ = 'Alex Gusev <alex@flancer64.com>'
+from prxgt.domain.attribute import Attribute
+
+
+class Entity:
+    """
+    Entity instance representation.
+    """
+
+    def __init__(self, id_=None, attrs={}):
+        self._id = id_
+        self._attrs = attrs
+        pass
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, val):
+        self._id = val
+
+    @property
+    def attrs(self):
+        return self._attrs
+
+    @attrs.setter
+    def attrs(self, val):
+        self._attrs = val
+
+    def add_attr(self, attr: Attribute):
+        self._attrs[attr.name] = attr
+        pass
+
+    def get_attr(self, attr_name) -> Attribute:
+        result = None
+        if attr_name in self._attrs:
+            result = self.attrs[attr_name]
+        return result

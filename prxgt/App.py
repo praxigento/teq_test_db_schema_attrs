@@ -1,17 +1,15 @@
+from prxgt.proc import simple
+
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import logging
 import string
 import random
 import time
-from prxgt.dom.Attribute import Attribute
-from prxgt.ProcessorSimple import ProcessorSimple
-
+import prxgt.const as cfg
+from prxgt.domain.attribute import Attribute
+from prxgt.proc.simple import ProcessorSimple
 
 class App:
-    ATTR_TYPE_INT = "int"
-    ATTR_TYPE_DEC = "decimal"
-    ATTR_TYPE_STR = "string"
-    ATTR_TYPE_TXT = "text"
     _config = None
     """Registry for all available attributes."""
     _attrs_available = {}
@@ -62,7 +60,7 @@ class App:
 
     def _oper_get_instance(self):
         """
-        Test instance with all attributes getting from storage.
+        Test getting the instance with all attributes from storage.
         :return:
         """
         logging.info("\tget instance with attributes by id:")
@@ -96,7 +94,7 @@ class App:
         Return some random type.
         :return:
         """
-        types = {0: self.ATTR_TYPE_INT, 1: self.ATTR_TYPE_DEC, 2: self.ATTR_TYPE_STR, 3: self.ATTR_TYPE_TXT}
+        types = {0: cfg.ATTR_TYPE_INT, 1: cfg.ATTR_TYPE_DEC, 2: cfg.ATTR_TYPE_STR, 3: cfg.ATTR_TYPE_TXT}
         ndx = random.randint(0, 3)
         result = types.get(ndx)
         return result
@@ -106,14 +104,14 @@ class App:
         Return some value for the given type.
         """
         result = None
-        if type_name == self.ATTR_TYPE_INT:
+        if type_name == cfg.ATTR_TYPE_INT:
             result = random.randint(0, 10);
-        if type_name == self.ATTR_TYPE_DEC:
+        if type_name == cfg.ATTR_TYPE_DEC:
             result = random.randint(0, 10000) / 100;
-        if type_name == self.ATTR_TYPE_STR:
+        if type_name == cfg.ATTR_TYPE_STR:
             chars = string.ascii_letters + string.digits + " "
             result = ''.join(random.choice(chars) for _ in range(8))
-        if type_name == self.ATTR_TYPE_TXT:
+        if type_name == cfg.ATTR_TYPE_TXT:
             chars = string.ascii_letters + string.digits + " "
             result = ''.join(random.choice(chars) for _ in range(512))
         return result
@@ -153,7 +151,7 @@ class App:
                 # get random attribute and generate value for the instance
                 attr_ndx = random.randint(0, attrs_total - 1)
                 attr_name = attr_names_avlb[attr_ndx]
-                # @type prxgt.dom.Attribute.Attribute
+                # @type prxgt.domain.Attribute.Attribute
                 attr_selected = self._attrs_available[attr_name]
                 self._attrs_used[attr_name] = attr_selected
                 attr = Attribute()

@@ -1,8 +1,8 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import sys
 import logging
-from prxgt.App import App
-from prxgt.Config import Config
+from prxgt.app import App
+from prxgt.config import Config
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s [%(levelname)s]: %(message)s')
 
