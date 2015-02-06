@@ -1,13 +1,14 @@
-from prxgt.proc import simple
-
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import logging
 import string
 import random
 import time
+
 import prxgt.const as cfg
 from prxgt.domain.attribute import Attribute
-from prxgt.proc.simple import ProcessorSimple
+from prxgt.domain.filter import FilterOld
+from prxgt.proc.simple import SimpleProcessor
+
 
 class App:
     _config = None
@@ -18,12 +19,12 @@ class App:
     """Processor to operate with data according to some schema."""
     _proc = None
 
-    def __init__(self, cfg):
-        self._config = cfg
+    def __init__(self, cfg_):
+        self._config = cfg_
         return
 
     def run(self):
-        self._proc = ProcessorSimple()
+        self._proc = SimpleProcessor()
         self._init_config()
         self._init_attrs()
         self._init_storage()
@@ -48,7 +49,6 @@ class App:
         self._get_ordered()
         self._get_paged()
         return
-
 
     def _get_ordered(self):
         logging.info("\tget set of the ordered instances:")
@@ -83,7 +83,8 @@ class App:
         attrs_max = self._config.get_oper_filter_attrs_max()
         start_time = time.time()
         for i in range(iterations):
-            self._proc.get_list_by_filter(423)
+            filter_ = FilterOld()
+            self._proc.get_list_by_filter(filter_)
             pass
         time_total = time.time() - start_time
         logging.info("\t\t%i iterations are done in %.3f sec;", iterations, time_total)
@@ -105,9 +106,9 @@ class App:
         """
         result = None
         if type_name == cfg.ATTR_TYPE_INT:
-            result = random.randint(0, 10);
+            result = random.randint(0, 10)
         if type_name == cfg.ATTR_TYPE_DEC:
-            result = random.randint(0, 10000) / 100;
+            result = random.randint(0, 10000) / 100
         if type_name == cfg.ATTR_TYPE_STR:
             chars = string.ascii_letters + string.digits + " "
             result = ''.join(random.choice(chars) for _ in range(8))

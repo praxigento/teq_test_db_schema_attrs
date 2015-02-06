@@ -1,7 +1,7 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 from abc import ABCMeta, abstractmethod
 
-from prxgt.domain.filter import Filter
+from prxgt.domain.filter.filter import Filter
 
 
 class ProcessorBase(metaclass=ABCMeta):

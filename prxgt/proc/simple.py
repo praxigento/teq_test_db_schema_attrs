@@ -1,6 +1,6 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 from prxgt.proc.base import ProcessorBase
-from prxgt.domain.filter import Filter
+from prxgt.domain.filter.filter import Filter
 
 
 class SimpleProcessor(ProcessorBase):

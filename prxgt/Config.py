@@ -36,3 +36,6 @@ class Config:
 
     def get_oper_filter_attrs_max(self):
         return self._data['operations']['get_by_filter']['attrs_in_filter_max']
+
+    def get_oper_filter_attrs_min(self):
+        return self._data['operations']['get_by_filter']['attrs_in_filter_min']

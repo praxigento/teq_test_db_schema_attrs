@@ -17,6 +17,7 @@
         },
         "get_by_filter": {
             "count": 400,
+            "attrs_in_filter_min": 3,
             "attrs_in_filter_max": 8
         },
         "get_ordered": {

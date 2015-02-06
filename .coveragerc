@@ -2,6 +2,7 @@
 omit =
     prxgt/test*
     prxgt/domain/test*
+    prxgt/domain/filter/test*
     prxgt/proc/test*
     prxgt/report/test*
 
