@@ -1,11 +1,7 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import unittest
 
-from prxgt.const import *
-from prxgt.domain.filter.expression import Expression
-from prxgt.domain.filter.filter import Filter
 from prxgt.domain.filter.function import Function
-from prxgt.domain.filter.function_rule import FunctionRule
 
 
 class Test(unittest.TestCase):

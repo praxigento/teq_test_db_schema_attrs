@@ -38,7 +38,6 @@ class Test(unittest.TestCase):
         self.assertEqual(filters, crule.filters)
         pass
 
-
     def test_repr(self):
         and_ = "AND"
         cond = Condition(and_)

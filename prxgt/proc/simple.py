@@ -14,7 +14,6 @@ class SimpleProcessor(ProcessorBase):
     def get_list_paged(self, filter_data, order_data, pages_data):
         super().get_list_paged(filter_data, order_data, pages_data)
 
-
     def get_list_ordered(self, filter_data, order_data):
         super().get_list_ordered(filter_data, order_data)
 
@@ -27,7 +26,7 @@ class SimpleProcessor(ProcessorBase):
         return result
 
     def get_list_by_filter(self, filter_: Filter):
-        super().get_list_by_filter(filter_)
+        pass
 
 
 ProcessorBase.register(SimpleProcessor)

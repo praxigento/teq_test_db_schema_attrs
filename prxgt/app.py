@@ -6,18 +6,23 @@ import time
 
 import prxgt.const as cfg
 from prxgt.domain.attribute import Attribute
-from prxgt.domain.filter import FilterOld
+from prxgt.domain.filter.alias import Alias
+from prxgt.domain.filter.filter import Filter
+from prxgt.domain.filter.function import Function
+from prxgt.domain.filter.function_rule import FunctionRule
+from prxgt.domain.filter.value import Value
 from prxgt.proc.simple import SimpleProcessor
+from prxgt.repo.repository import Repository
 
 
 class App:
     _config = None
-    """Registry for all available attributes."""
-    _attrs_available = {}
     """Registry for all used attributes."""
     _attrs_used = {}
     """Processor to operate with data according to some schema."""
     _proc = None
+    """In-memory repo to registry attributes data to construct filters, etc."""
+    _repo = None
 
     def __init__(self, cfg_):
         self._config = cfg_
@@ -26,7 +31,7 @@ class App:
     def run(self):
         self._proc = SimpleProcessor()
         self._init_config()
-        self._init_attrs()
+        self._repo = Repository(self._config.get_dom_attrs_total())
         self._init_storage()
         self._operations()
         self._save_results()
@@ -52,11 +57,11 @@ class App:
 
     def _get_ordered(self):
         logging.info("\tget set of the ordered instances:")
-        pass
+        return
 
     def _get_paged(self):
         logging.info("\tget paged set of the ordered instances by filter:")
-        pass
+        return
 
     def _oper_get_instance(self):
         """
@@ -70,7 +75,7 @@ class App:
         for i in range(iterations):
             # generate random ID from available IDs range
             instance_id = random.randint(0, total_instances - 1)
-            instance = self._proc.get_inst_by_id(instance_id)
+            # instance = self._proc.get_inst_by_id(instance_id)
             # should we validate instance data?
             pass
         time_total = time.time() - start_time
@@ -80,25 +85,16 @@ class App:
     def _oper_get_by_filter(self):
         logging.info("\tget instances by filter:")
         iterations = self._config.get_oper_filter_count()
-        attrs_max = self._config.get_oper_filter_attrs_max()
+        # attrs_max = self._config.get_oper_filter_attrs_max()
         start_time = time.time()
         for i in range(iterations):
-            filter_ = FilterOld()
+            rule = FunctionRule(Function("eq", 2), Alias("entity_id"), Value(32))
+            filter_ = Filter(rule)
             self._proc.get_list_by_filter(filter_)
             pass
         time_total = time.time() - start_time
         logging.info("\t\t%i iterations are done in %.3f sec;", iterations, time_total)
         pass
-
-    def _get_random_type(self):
-        """
-        Return some random type.
-        :return:
-        """
-        types = {0: cfg.ATTR_TYPE_INT, 1: cfg.ATTR_TYPE_DEC, 2: cfg.ATTR_TYPE_STR, 3: cfg.ATTR_TYPE_TXT}
-        ndx = random.randint(0, 3)
-        result = types.get(ndx)
-        return result
 
     def _get_value_by_type(self, type_name):
         """
@@ -117,16 +113,6 @@ class App:
             result = ''.join(random.choice(chars) for _ in range(512))
         return result
 
-    def _init_attrs(self):
-        logging.info("create registry for available attributes;")
-        for i in range(self._config.get_dom_attrs_total()):
-            key = "a" + repr(i)
-            attr = Attribute()
-            attr.name = key
-            attr.type = self._get_random_type()
-            self._attrs_available[key] = attr
-        return
-
     def _init_storage(self):
         """
         Create entity instances in storage according to selected scheme and register
@@ -136,7 +122,7 @@ class App:
         attrs_total = self._config.get_dom_attrs_total()
         attrs_min = self._config.get_dom_attrs_per_instance_min()
         attrs_max = self._config.get_dom_attrs_per_instance_max()
-        attr_names_avlb = list(self._attrs_available.keys())
+        attr_names_avlb = self._repo.get_attr_names()
         inst_total = self._config.get_dom_inst_total()
 
         logging.info("\ttotal different attributes for entity: %i;", attrs_total)
@@ -153,7 +139,7 @@ class App:
                 attr_ndx = random.randint(0, attrs_total - 1)
                 attr_name = attr_names_avlb[attr_ndx]
                 # @type prxgt.domain.Attribute.Attribute
-                attr_selected = self._attrs_available[attr_name]
+                attr_selected = self._repo.get_attr_by_name(attr_name)
                 self._attrs_used[attr_name] = attr_selected
                 attr = Attribute()
                 attr.name = attr_selected.name

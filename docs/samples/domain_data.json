@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "a0": {"type": "int"},
+    "a1": {"type": "decimal"},
+    "a2": {"type": "string"},
+    "a3": {"type": "text"}
+  },
+  "data": {
+    "1": {
+      "a0": 4
+    },
+    "2": {
+      "a0": 6,
+      "a2": "value"
+    },
+    "3": {
+      "a1": 23.43,
+      "a2": "other value",
+      "a3": "text with more than 255 characters length."
+    }
+  }
+}

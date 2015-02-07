@@ -36,8 +36,8 @@ class Test(unittest.TestCase):
         exp1 = Expression()
         exp2 = Expression()
         tup = (exp1, exp2, fname)
-        frule1 = FunctionRule(fname, tup)
-        frule2 = FunctionRule(fname, exp1, exp2, fname)
+        FunctionRule(fname, tup)
+        FunctionRule(fname, exp1, exp2, fname)
         pass
 
 

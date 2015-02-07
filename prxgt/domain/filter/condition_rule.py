@@ -18,7 +18,6 @@ class ConditionRule(FilterRule):
             self._filters.append(one)
         pass
 
-
     @property
     def condition(self) -> Condition:
         return self._condition
