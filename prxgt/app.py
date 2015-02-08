@@ -106,7 +106,7 @@ class App:
         if type_name == cfg.ATTR_TYPE_DEC:
             result = random.randint(0, 10000) / 100
         if type_name == cfg.ATTR_TYPE_STR:
-            chars = string.ascii_letters + string.digits + " "
+            chars = string.ascii_letters + string.digits
             result = ''.join(random.choice(chars) for _ in range(8))
         if type_name == cfg.ATTR_TYPE_TXT:
             chars = string.ascii_letters + string.digits + " "

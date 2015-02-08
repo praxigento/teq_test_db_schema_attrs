@@ -2,21 +2,22 @@ __author__ = 'Alex Gusev <alex@flancer64.com>'
 import logging
 import random
 
-import prxgt.const as cfg
+import prxgt.const as const
+from prxgt.config import Config
 from prxgt.domain.attribute import Attribute
 
 
 class Repository(object):
     """
-    Repository contains meta data for domain (attribute names, types and values).
+    Repository contains meta data for domain (attribute names, types and values) and data itself. Repository data is
+    used to create test queries. Repository can be saved to file or loaded from file.
     """
 
-    def __init__(self, attrs_total):
+    def __init__(self, config: Config):
         """Registry for all available attributes (name and type)."""
         self._attrs_available = {}
-
-        self._types = {0: cfg.ATTR_TYPE_INT, 1: cfg.ATTR_TYPE_DEC, 2: cfg.ATTR_TYPE_STR, 3: cfg.ATTR_TYPE_TXT}
-        self._init_attrs(attrs_total)
+        self._types = {0: const.ATTR_TYPE_INT, 1: const.ATTR_TYPE_DEC, 2: const.ATTR_TYPE_STR, 3: const.ATTR_TYPE_TXT}
+        self._init_attrs(config.get_dom_attrs_total())
 
     def _init_attrs(self, attrs_total):
         """
