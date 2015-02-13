@@ -1,6 +1,9 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import unittest
+import os
+
 from mock import Mock
+
 from prxgt.config import Config
 from prxgt.repo.repository import Repository
 
@@ -25,14 +28,31 @@ class Test(unittest.TestCase):
         self.assertIsNotNone(repo)
         return
 
-    def test_get_attr_names(self):
+    def test_init_all(self):
         # prepare data
         config = self._mock_config()
         # tests
         repo = Repository(config)
-        names = repo.get_attr_names()
-        self.assertTrue(isinstance(names, list))
-        self.assertEqual(10, len(names))
+        repo.init_all()
+        self.assertTrue(isinstance(repo._instances, dict))
+        self.assertEqual(50, len(repo._instances))
+        return
+
+    def test_save_load(self):
+        filename = '../_test/tmp/repository.json'
+        dirname = os.path.dirname(os.path.abspath(__file__))
+        fullpath = dirname + '/' + filename
+        # prepare data
+        config = self._mock_config()
+        # tests
+        repo = Repository(config)
+        repo.init_all()
+        before = repo._instances[0]
+        repo.save(fullpath)
+        repo.load(fullpath)
+        after = repo._instances[0]
+        for attr_name in before:
+            self.assertEqual(before[attr_name].value, after[attr_name].value)
         return
 
     def test_get_attr_names(self):
@@ -40,6 +60,18 @@ class Test(unittest.TestCase):
         config = self._mock_config()
         # tests
         repo = Repository(config)
+        repo._init_attrs();
+        names = repo.get_attr_names()
+        self.assertTrue(isinstance(names, list))
+        self.assertEqual(10, len(names))
+        return
+
+    def test_get_attr_by_name(self):
+        # prepare data
+        config = self._mock_config()
+        # tests
+        repo = Repository(config)
+        repo._init_attrs();
         attr = repo.get_attr_by_name("a0")
         self.assertEqual("a0", attr.name)
         return

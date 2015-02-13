@@ -31,8 +31,8 @@ class App:
     def run(self):
         self._proc = SimpleProcessor()
         self._init_config()
-        self._repo = Repository(self._config.get_dom_attrs_total())
-        self._init_storage()
+        self._repo = Repository(self._config)
+        self._repo.init_all()
         self._operations()
         self._save_results()
         return
@@ -112,42 +112,3 @@ class App:
             chars = string.ascii_letters + string.digits + " "
             result = ''.join(random.choice(chars) for _ in range(512))
         return result
-
-    def _init_storage(self):
-        """
-        Create entity instances in storage according to selected scheme and register
-        used attributes.
-        """
-        logging.info("create instances using simple data processor:")
-        attrs_total = self._config.get_dom_attrs_total()
-        attrs_min = self._config.get_dom_attrs_per_instance_min()
-        attrs_max = self._config.get_dom_attrs_per_instance_max()
-        attr_names_avlb = self._repo.get_attr_names()
-        inst_total = self._config.get_dom_inst_total()
-
-        logging.info("\ttotal different attributes for entity: %i;", attrs_total)
-        logging.info("\tmin different attributes per one instance: %i;", attrs_min)
-        logging.info("\tmax different attributes per one instance: %i;", attrs_max)
-        logging.info("\ttotal instances in storage: %i;", inst_total)
-
-        for i in range(inst_total):
-            inst = {}
-            # get number of the attrs for current instance
-            attrs_num = random.randint(attrs_min, attrs_max)
-            for j in range(attrs_num):
-                # get random attribute and generate value for the instance
-                attr_ndx = random.randint(0, attrs_total - 1)
-                attr_name = attr_names_avlb[attr_ndx]
-                # @type prxgt.domain.Attribute.Attribute
-                attr_selected = self._repo.get_attr_by_name(attr_name)
-                self._attrs_used[attr_name] = attr_selected
-                attr = Attribute()
-                attr.name = attr_selected.name
-                attr.type = attr_selected.type
-                attr.value = self._get_value_by_type(attr_selected.type)
-                inst[attr.name] = attr
-            self._proc.add_entity_inst(inst)
-        logging.info("\ttotal %i instances are created, %i different attributes are used;", inst_total,
-                     len(self._attrs_used))
-        # pprint(self._proc.storage)
-        return

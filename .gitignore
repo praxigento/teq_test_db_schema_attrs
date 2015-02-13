@@ -56,3 +56,4 @@ target/
 # this project files
 /.idea/
 /atlassian-ide-plugin.xml
+/prxgt/_test/tmp/repository.json
