@@ -1,5 +1,6 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import unittest
+
 from prxgt.const import *
 from prxgt.domain.attribute import Attribute
 
@@ -32,6 +33,13 @@ class Test(unittest.TestCase):
         self.assertEqual("[name@type]='value'", repr(attr))
         attr = Attribute('name', ATTR_TYPE_TXT, 'value')
         self.assertEqual("[name@text]='valu...'", repr(attr))
+        pass
+
+
+    def test_meta(self):
+        attr = Attribute('name', 'type', 'value')
+        meta = attr.meta
+        self.assertEqual("[name@type]", repr(meta))
         pass
 
 

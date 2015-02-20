@@ -1,8 +1,10 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 
-import prxgt.const as const
 import random
 import string
+
+import prxgt.const as const
+
 
 TYPE_DEC = const.ATTR_TYPE_DEC
 TYPE_INT = const.ATTR_TYPE_INT
@@ -13,11 +15,11 @@ TYPE_TXT = const.ATTR_TYPE_TXT
 class Generator(object):
     """
     Values generator for various types data.
-        Простой генератор, который возвращает значение для данных какого-либо типа.
-        Функция генерации значения может переопределяться через метод set_for_type(type, function).
-        Переопределение функции сделано криво - это и не Java (с отдельным типом параметра -
-        setForType(TypeGenerator newOne)), и не JavaScript (пока что я не знаю как сделать, чтобы внешняя функция стала
-        "родным" методом для объекта).
+    Простой генератор, который возвращает значение для данных какого-либо типа.
+    Функция генерации значения может переопределяться через метод set_for_type(type, function).
+    Переопределение функции сделано криво - это и не Java (с отдельным типом параметра -
+    setForType(TypeGenerator newOne)), и не JavaScript (пока что я не знаю как сделать, чтобы внешняя функция стала
+    "родным" методом для объекта).
     """
 
     def __init__(self):

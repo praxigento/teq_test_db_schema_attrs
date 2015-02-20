@@ -1,7 +1,7 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import logging
-import string
 import random
+import string
 import time
 
 import prxgt.const as cfg
@@ -10,28 +10,30 @@ from prxgt.domain.filter.filter import Filter
 from prxgt.domain.filter.function import Function
 from prxgt.domain.filter.function_rule import FunctionRule
 from prxgt.domain.filter.value import Value
-from prxgt.proc.simple import SimpleProcessor
+from prxgt.proc.repo import RepoProcessor
 from prxgt.repo.repository import Repository
 
 
 class App:
-    _config = None
-    """Registry for all used attributes."""
-    _attrs_used = {}
-    """Processor to operate with data according to some schema."""
-    _proc = None
-    """In-memory repo to registry attributes data to construct filters, etc."""
-    _repo = None
 
     def __init__(self, cfg_):
         self._config = cfg_
+        self._attrs_used = {}
+        """Registry for all used attributes."""
+        self._repo = None
+        """
+        In-memory repo to registry attributes data to construct filters,
+        etc.
+        """
+        _proc = None
+        """Processor to operate with data according to some schema."""
         return
 
     def run(self):
-        self._proc = SimpleProcessor()
         self._init_config()
         self._repo = Repository(self._config)
         self._repo.init_all()
+        self._proc = RepoProcessor(self._repo)
         self._operations()
         self._save_results()
         return
@@ -74,11 +76,12 @@ class App:
         for i in range(iterations):
             # generate random ID from available IDs range
             instance_id = random.randint(0, total_instances - 1)
-            # instance = self._proc.get_inst_by_id(instance_id)
+            instance = self._proc.get_inst_by_id(instance_id)
             # should we validate instance data?
             pass
         time_total = time.time() - start_time
-        logging.info("\t\t%i iterations are done in %.3f sec;", iterations, time_total)
+        logging.info(
+            "\t\t%i iterations are done in %.3f sec;", iterations, time_total)
         return
 
     def _oper_get_by_filter(self):
@@ -87,12 +90,14 @@ class App:
         # attrs_max = self._config.get_oper_filter_attrs_max()
         start_time = time.time()
         for i in range(iterations):
-            rule = FunctionRule(Function("eq", 2), Alias("entity_id"), Value(32))
+            rule = FunctionRule(
+                Function("eq", 2), Alias("entity_id"), Value(32))
             filter_ = Filter(rule)
             self._proc.get_list_by_filter(filter_)
             pass
         time_total = time.time() - start_time
-        logging.info("\t\t%i iterations are done in %.3f sec;", iterations, time_total)
+        logging.info(
+            "\t\t%i iterations are done in %.3f sec;", iterations, time_total)
         pass
 
     def _get_value_by_type(self, type_name):

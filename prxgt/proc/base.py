@@ -2,11 +2,11 @@ __author__ = 'Alex Gusev <alex@flancer64.com>'
 from abc import ABCMeta, abstractmethod
 
 from prxgt.domain.filter.filter import Filter
-
+from prxgt.domain.instance import Instance
 
 class ProcessorBase(metaclass=ABCMeta):
     @abstractmethod
-    def add_entity_inst(self, inst):
+    def add_instance(self, inst: Instance):
         """
         Add new instance to storage.
         :param inst: new instance (contains attributes and values)

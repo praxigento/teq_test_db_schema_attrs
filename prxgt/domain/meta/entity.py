@@ -1,27 +1,18 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
-from prxgt.domain.attribute import Attribute
+from prxgt.domain.meta.attribute import Attribute
 
 
 class Entity:
     """
-    Entity instance representation.
+    Entity definition. Each entity contains a set of meta attributes (name and type).
     """
 
-    def __init__(self, id_=None, attrs=None):
-        self._id = id_
+    def __init__(self, attrs=None):
         if attrs is None:
             self._attrs = {}
         else:
             self._attrs = attrs
         pass
-
-    @property
-    def id(self):
-        return self._id
-
-    @id.setter
-    def id(self, val):
-        self._id = val
 
     @property
     def attrs(self):

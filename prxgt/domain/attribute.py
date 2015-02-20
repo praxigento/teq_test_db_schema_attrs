@@ -5,7 +5,7 @@ from prxgt.domain.meta.attribute import Attribute as AttributeBase
 
 class Attribute(AttributeBase):
     """
-    This Attribute model contains data.
+    Attribute model contains data.
     """
 
     def __init__(self, name=None, type_=None, value=None):
@@ -20,6 +20,14 @@ class Attribute(AttributeBase):
     @value.setter
     def value(self, val):
         self._value = val
+
+    @property
+    def meta(self):
+        """
+        META Attribute (name and type only)
+        :return:
+        """
+        return AttributeBase(self._name, self._type)
 
     def __repr__(self):
         result = super(Attribute, self).__repr__()

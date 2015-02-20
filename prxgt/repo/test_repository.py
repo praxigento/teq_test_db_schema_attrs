@@ -6,6 +6,14 @@ from mock import Mock
 
 from prxgt.config import Config
 from prxgt.repo.repository import Repository
+from prxgt.domain.instance import Instance
+from prxgt.domain.attribute import Attribute
+
+
+ATTR_NAME = "a0"
+INST_ID = 5
+ATTR_TYPE = "som type"
+ATTR_VALUE = "some value"
 
 
 class Test(unittest.TestCase):
@@ -48,11 +56,13 @@ class Test(unittest.TestCase):
         repo = Repository(config)
         repo.init_all()
         before = repo._instances[0]
+        assert isinstance(before, Instance)
         repo.save(fullpath)
         repo.load(fullpath)
         after = repo._instances[0]
-        for attr_name in before:
-            self.assertEqual(before[attr_name].value, after[attr_name].value)
+        assert isinstance(after, Instance)
+        for attr_name in before.attrs:
+            self.assertEqual(before.get_attr(attr_name).value, after.get_attr(attr_name).value)
         return
 
     def test_get_attr_names(self):
@@ -74,6 +84,31 @@ class Test(unittest.TestCase):
         repo._init_attrs()
         attr = repo.get_attr_by_name("a0")
         self.assertEqual("a0", attr.name)
+        return
+
+    def test_add_instance(self):
+        # prepare data
+        config = self._mock_config()
+        attr = Attribute()
+        attr.name = ATTR_NAME
+        attr.type = ATTR_TYPE
+        attr.value = ATTR_VALUE
+        inst = Instance()
+        inst.id = INST_ID
+        inst.add_attr(attr)
+        # tests
+        repo = Repository(config)
+        repo.add_instance(inst)
+        all_ = repo.instances
+        self.assertTrue(isinstance(all_, dict))
+        test_inst = all_[INST_ID]
+        assert isinstance(test_inst, Instance)
+        self.assertEqual(INST_ID, test_inst.id)
+        test_attr = test_inst.get_attr(ATTR_NAME)
+        assert isinstance(test_attr, Attribute)
+        self.assertEqual(ATTR_NAME, test_attr.name)
+        self.assertEqual(ATTR_TYPE, test_attr.type)
+        self.assertEqual(ATTR_VALUE, test_attr.value)
         return
 
 
