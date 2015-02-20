@@ -1,6 +1,6 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import unittest
-from prxgt.const import *
+
 from prxgt.domain.meta.attribute import Attribute
 
 

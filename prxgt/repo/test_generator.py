@@ -1,6 +1,7 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 import unittest
-import prxgt.const  as const
+
+import prxgt.const as const
 from prxgt.repo.generator import Generator
 
 

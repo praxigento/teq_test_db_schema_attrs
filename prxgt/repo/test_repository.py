@@ -60,7 +60,7 @@ class Test(unittest.TestCase):
         config = self._mock_config()
         # tests
         repo = Repository(config)
-        repo._init_attrs();
+        repo._init_attrs()
         names = repo.get_attr_names()
         self.assertTrue(isinstance(names, list))
         self.assertEqual(10, len(names))
@@ -71,7 +71,7 @@ class Test(unittest.TestCase):
         config = self._mock_config()
         # tests
         repo = Repository(config)
-        repo._init_attrs();
+        repo._init_attrs()
         attr = repo.get_attr_by_name("a0")
         self.assertEqual("a0", attr.name)
         return

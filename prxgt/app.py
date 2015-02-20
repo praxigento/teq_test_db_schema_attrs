@@ -5,7 +5,6 @@ import random
 import time
 
 import prxgt.const as cfg
-from prxgt.domain.attribute import Attribute
 from prxgt.domain.filter.alias import Alias
 from prxgt.domain.filter.filter import Filter
 from prxgt.domain.filter.function import Function

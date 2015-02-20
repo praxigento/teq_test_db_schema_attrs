@@ -1,5 +1,4 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
-import prxgt.const as const
 
 
 class Attribute:
