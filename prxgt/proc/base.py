@@ -4,6 +4,7 @@ from abc import ABCMeta, abstractmethod
 from prxgt.domain.filter.filter import Filter
 from prxgt.domain.instance import Instance
 
+
 class ProcessorBase(metaclass=ABCMeta):
     @abstractmethod
     def add_instance(self, inst: Instance):

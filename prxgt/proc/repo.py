@@ -1,4 +1,6 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
+import random
+
 from prxgt.proc.base import ProcessorBase
 from prxgt.domain.filter.filter import Filter
 from prxgt.domain.instance import Instance
@@ -7,7 +9,8 @@ from prxgt.repo.repository import Repository
 
 class RepoProcessor(ProcessorBase):
     """
-    Simple in-memory storage processor.
+    Simple in-memory processor based on Repository object. Used in development
+    purposes only to test operations.
     """
 
     def __init__(self, repo: Repository):
@@ -29,7 +32,23 @@ class RepoProcessor(ProcessorBase):
         return result
 
     def get_list_by_filter(self, filter_: Filter):
-        pass
+        result = {}
+        assert (isinstance(self._repo, Repository))
+        instances = self._repo.instances
+        assert (isinstance(instances, dict))
+        for id_ in instances:
+            one = instances[id_]
+            # TODO: we need comparator to get filtration result for the concrete instance
+            if comparator(filter, one):
+                result[one.id] = one
+            pass
+        return result
 
 
-ProcessorBase.register(RepoProcessor)
+def comparator(filter, instance):
+    chance = random.randint(0, 10)
+    result = (chance > 9)
+    return result
+
+# TODO: should we register subclasses in parent?
+# ProcessorBase.register(RepoProcessor)

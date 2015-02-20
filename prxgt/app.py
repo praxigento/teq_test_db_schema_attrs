@@ -10,12 +10,13 @@ from prxgt.domain.filter.filter import Filter
 from prxgt.domain.filter.function import Function
 from prxgt.domain.filter.function_rule import FunctionRule
 from prxgt.domain.filter.value import Value
+from prxgt.proc.base import ProcessorBase
 from prxgt.proc.repo import RepoProcessor
+from prxgt.domain.instance import Instance
 from prxgt.repo.repository import Repository
 
 
 class App:
-
     def __init__(self, cfg_):
         self._config = cfg_
         self._attrs_used = {}
@@ -25,7 +26,7 @@ class App:
         In-memory repo to registry attributes data to construct filters,
         etc.
         """
-        _proc = None
+        self._proc = None  # :type : ProcessorBase
         """Processor to operate with data according to some schema."""
         return
 
@@ -34,6 +35,7 @@ class App:
         self._repo = Repository(self._config)
         self._repo.init_all()
         self._proc = RepoProcessor(self._repo)
+        assert isinstance(self._proc, ProcessorBase)
         self._operations()
         self._save_results()
         return
@@ -77,8 +79,9 @@ class App:
             # generate random ID from available IDs range
             instance_id = random.randint(0, total_instances - 1)
             instance = self._proc.get_inst_by_id(instance_id)
-            # should we validate instance data?
-            pass
+            # validate results
+            assert isinstance(instance, Instance)
+            assert instance.id == instance_id
         time_total = time.time() - start_time
         logging.info(
             "\t\t%i iterations are done in %.3f sec;", iterations, time_total)

@@ -11,9 +11,11 @@ from prxgt.domain.attribute import Attribute
 
 
 ATTR_NAME = "a0"
-INST_ID = 5
+INST_ID = 0
 ATTR_TYPE = "som type"
 ATTR_VALUE = "some value"
+
+_TEST_CONFIG_ATTRS_TOTAL = 10
 
 
 class Test(unittest.TestCase):
@@ -22,7 +24,7 @@ class Test(unittest.TestCase):
 
     def _mock_config(self) -> Config:
         result = Mock(Config())
-        result.get_dom_attrs_total = Mock(return_value=10)
+        result.get_dom_attrs_total = Mock(return_value=_TEST_CONFIG_ATTRS_TOTAL)
         result.get_dom_attrs_per_instance_min = Mock(return_value=3)
         result.get_dom_attrs_per_instance_max = Mock(return_value=5)
         result.get_dom_inst_total = Mock(return_value=50)
@@ -73,7 +75,7 @@ class Test(unittest.TestCase):
         repo._init_attrs()
         names = repo.get_attr_names()
         self.assertTrue(isinstance(names, list))
-        self.assertEqual(10, len(names))
+        self.assertEqual(_TEST_CONFIG_ATTRS_TOTAL + 1, len(names))  # + "id" attribute
         return
 
     def test_get_attr_by_name(self):
@@ -94,7 +96,6 @@ class Test(unittest.TestCase):
         attr.type = ATTR_TYPE
         attr.value = ATTR_VALUE
         inst = Instance()
-        inst.id = INST_ID
         inst.add_attr(attr)
         # tests
         repo = Repository(config)

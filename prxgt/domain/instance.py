@@ -1,6 +1,9 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
+from prxgt.const import ATTR_TYPE_INT
 from prxgt.domain.attribute import Attribute
 from prxgt.domain.meta.entity import Entity
+
+ATTR_ID_NAME = "id"
 
 
 class Instance(Entity):
@@ -22,7 +25,12 @@ class Instance(Entity):
 
     @id.setter
     def id(self, val):
-        self._id = val
+        self._id = int(val)
+        attr = Attribute()
+        attr.name = ATTR_ID_NAME
+        attr.type = ATTR_TYPE_INT
+        attr.value = int(val)
+        self.add_attr(attr)
 
     @property
     def attrs(self):
@@ -34,7 +42,7 @@ class Instance(Entity):
 
     def add_attr(self, attr: Attribute):
         """
-        askldj alsdkasj dlas
+        Set (add or replace) new attribute to this instance.
         """
         self._attrs[attr.name] = attr
         pass

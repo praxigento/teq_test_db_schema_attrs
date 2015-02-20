@@ -5,9 +5,10 @@ import json
 
 import prxgt.const as const
 from prxgt.config import Config
+from prxgt.domain.meta.attribute import Attribute as MetaAttribute
 from prxgt.domain.attribute import Attribute
 from prxgt.repo.generator import Generator
-from prxgt.domain.instance import Instance
+from prxgt.domain.instance import Instance, ATTR_ID_NAME
 
 
 TYPE_DEC = const.ATTR_TYPE_DEC
@@ -27,32 +28,32 @@ class Repository(object):
     """
 
     def __init__(self, config: Config):
-        """
-
-        :param config:
-        :return:
-        """
-
         self._config = config
         """ Save application configuration """
-
         self._generator = Generator()
-
+        """Values generator for the various types of the attributes."""
         self._attrs_available = {}
-        """ Registry for all available attributes (name and type). """
-
+        """ Registry for all available attributes (meta: name and type). """
         self._attrs_used = {}
-        """ Registry for all attributes used in instances (name and type). """
-
+        """ Registry for all attributes used in instances (meta: name and type). """
         self._instances = {}
         """ Registry for the generated or loaded instances """
-
         self._types = {0: TYPE_DEC, 1: TYPE_INT, 2: TYPE_STR, 3: TYPE_TXT}
         """ Available types """
+        self._add_attr_id()
+        """Add "id" attribute to the repo."""
+
+    def _add_attr_id(self):
+        """Add "id" meta attribute."""
+        attr = MetaAttribute(ATTR_ID_NAME, TYPE_INT)
+        self._attrs_available[ATTR_ID_NAME] = attr
+        self._attrs_used[ATTR_ID_NAME] = attr
+        return
 
     def init_all(self):
         self._init_attrs()
         self._init_instances()
+        return
 
     def add_instance(self, inst: Instance):
         for attr_name in inst.attrs:
@@ -61,7 +62,9 @@ class Repository(object):
                 self._attrs_available[attr_name] = attr
             if attr_name not in self._attrs_used:
                 self._attrs_used[attr_name] = attr
-        self._instances[inst.id] = inst
+        id_ = len(self._instances)
+        inst.id = id_
+        self._instances[id_] = inst
 
     def _init_attrs(self):
         """
@@ -73,7 +76,7 @@ class Repository(object):
         for i in range(total):
             name = "a" + repr(i)
             type_ = self._get_random_type()
-            attr = Attribute()
+            attr = MetaAttribute()
             attr.name = name
             attr.type = type_
             self._attrs_available[name] = attr
@@ -90,17 +93,16 @@ class Repository(object):
             # get number of the attributes for current instance
             attrs_num = random.randint(attrs_min, attrs_max)
             for j in range(attrs_num):
-                # get random attribute and generate value for the instance
+                # get random meta attribute and generate value for the instance
                 attr_ndx = random.randint(0, attrs_total - 1)
                 attr_name = attr_names[attr_ndx]
-                attr_selected = self.get_attr_by_name(
-                    attr_name)  # @type Attribute
-                assert isinstance(attr_selected, Attribute)
-                self._attrs_used[attr_name] = attr_selected
+                meta_attr = self.get_attr_by_name(attr_name)
+                assert isinstance(meta_attr, MetaAttribute)
+                self._attrs_used[attr_name] = meta_attr
                 attr = Attribute()
-                attr.name = attr_selected.name
-                attr.type = attr_selected.type
-                attr.value = self._generator.get_value(attr_selected.type)
+                attr.name = meta_attr.name
+                attr.type = meta_attr.type
+                attr.value = self._generator.get_value(meta_attr.type)
                 inst.add_attr(attr)
             inst.id = i
             self._instances[i] = inst
@@ -113,7 +115,7 @@ class Repository(object):
         # parse meta data (attributes)
         for key in self._attrs_available:
             attr = self._attrs_available[key]
-            assert isinstance(attr, Attribute)
+            assert isinstance(attr, MetaAttribute)
             obj[JSON_META][attr.name] = {JSON_TYPE: attr.type}
         # get all instances by id and save it into dictionary to convert to JSON
         for key in self._instances:
@@ -139,9 +141,10 @@ class Repository(object):
         self._attrs_available = {}
         self._attrs_used = {}
         self._instances = {}
+        self._add_attr_id()
         # load meta
         for attr_name in meta:
-            attr = Attribute()
+            attr = MetaAttribute()
             attr.name = attr_name
             attr.type = meta[attr_name][JSON_TYPE]
             self._attrs_available[attr_name] = attr
@@ -152,7 +155,7 @@ class Repository(object):
             inst = Instance()
             for attr_name in inst_loaded:
                 attr_meta = self._attrs_available[attr_name]
-                assert isinstance(attr_meta, Attribute)
+                assert isinstance(attr_meta, MetaAttribute)
                 attr = Attribute()
                 attr.name = attr_name
                 attr.type = attr_meta.type
@@ -166,7 +169,7 @@ class Repository(object):
     def instances(self):
         """
         Return all instances from repo (dictionary: id => instance)
-        :return:
+        :return dict:
         """
         return self._instances
 

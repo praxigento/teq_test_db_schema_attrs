@@ -2,8 +2,11 @@ __author__ = 'Alex Gusev <alex@flancer64.com>'
 import unittest
 
 from prxgt.const import *
+
 from prxgt.domain.attribute import Attribute
-from prxgt.domain.instance import Instance
+from prxgt.domain.instance import Instance, ATTR_ID_NAME
+
+INST_ID = 5
 
 
 class Test(unittest.TestCase):
@@ -27,6 +30,21 @@ class Test(unittest.TestCase):
         self.assertEqual(id_, inst.id)
         self.assertEqual(attrs, inst.attrs)
         pass
+
+    def test_id(self):
+        """
+        New attribute named "id" should be created
+        :return:
+        """
+        inst = Instance()
+        inst.id = INST_ID
+        self.assertIsNotNone(inst.get_attr(ATTR_ID_NAME))
+        attr = inst.get_attr(ATTR_ID_NAME)
+        assert isinstance(attr, Attribute)
+        self.assertEqual(ATTR_ID_NAME, attr.name)
+        self.assertEqual(ATTR_TYPE_INT, attr.type)
+        self.assertEqual(INST_ID, attr.value)
+        return
 
     def test_add_attr(self):
         attr_name = 'a0'
