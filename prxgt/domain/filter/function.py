@@ -5,7 +5,7 @@ __author__ = 'Alex Gusev <alex@flancer64.com>'
 
 
 class Function(object):
-    def __init__(self, name, args_count):
+    def __init__(self, name, args_count=2):
         self._name = name
         self._args_count = args_count
 

@@ -6,6 +6,10 @@ from prxgt.domain.instance import Instance
 
 
 class ProcessorBase(metaclass=ABCMeta):
+    """
+    Processor interface to be implemented for various data structure schemas.
+    """
+
     @abstractmethod
     def add_instance(self, inst: Instance):
         """

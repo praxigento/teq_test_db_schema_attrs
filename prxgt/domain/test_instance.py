@@ -10,13 +10,16 @@ INST_ID = 5
 
 
 class Test(unittest.TestCase):
+
     def setUp(self):
         pass
 
     def test_properties(self):
         id_ = 4
-        attrs = {'a1': Attribute('a1', ATTR_TYPE_INT, 23), 'a2': Attribute('a2', ATTR_TYPE_DEC, 2.3),
-                 'a3': Attribute('a3', ATTR_TYPE_STR, 'string')}
+        attrs = {'a1': Attribute('a1', ATTR_TYPE_INT, 23),
+                 'a2': Attribute('a2', ATTR_TYPE_DEC, 2.3),
+                 'a3': Attribute('a3', ATTR_TYPE_STR, 'string')
+                 }
         # constructor w/o params
         inst = Instance()
         self.assertIsNotNone(inst)

@@ -1,10 +1,10 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
-import random
 
-from prxgt.proc.base import ProcessorBase
 from prxgt.domain.filter.filter import Filter
 from prxgt.domain.instance import Instance
+from prxgt.proc.base import ProcessorBase
 from prxgt.repo.repository import Repository
+from prxgt.proc.filtrator import Filtrator
 
 
 class RepoProcessor(ProcessorBase):
@@ -38,17 +38,10 @@ class RepoProcessor(ProcessorBase):
         assert (isinstance(instances, dict))
         for id_ in instances:
             one = instances[id_]
-            # TODO: we need comparator to get filtration result for the concrete instance
-            if comparator(filter, one):
+            # apply current filter for the concrete instance
+            if Filtrator.is_applied(filter_, one):
                 result[one.id] = one
-            pass
         return result
-
-
-def comparator(filter, instance):
-    chance = random.randint(0, 10)
-    result = (chance > 9)
-    return result
 
 # TODO: should we register subclasses in parent?
 # ProcessorBase.register(RepoProcessor)

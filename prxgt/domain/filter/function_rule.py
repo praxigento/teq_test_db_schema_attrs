@@ -1,20 +1,23 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
 
+from prxgt.domain.filter.expression import Expression
 from prxgt.domain.filter.filter_rule import FilterRule
 from prxgt.domain.filter.function import Function
-from prxgt.domain.filter.expression import Expression
 
 
 class FunctionRule(Expression, FilterRule):
+
     """
-    FunctionRule представляет собой функцию с некоторым набором параметров, возвращающую True или False и может быть
-    использована в качестве FilterRule или части другой FunctionRule
+    FunctionRule представляет собой функцию с некоторым набором параметров,
+    возвращающую True или False и может бытьиспользована в качестве FilterRule
+    или части другой FunctionRule
     """
 
     def __init__(self, func: Function, *parameters: Expression):
         self._func = func
         self._params = []
-        # TODO we should check parts of the rule - 1 for NOT and > 1 for AND & OR
+        # TODO we should check parts of the rule - 1 for NOT and > 1 for AND &
+        # OR
         for one in parameters:
             self._params.append(one)
         pass

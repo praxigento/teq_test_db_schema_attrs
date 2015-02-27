@@ -93,10 +93,12 @@ class App:
         # attrs_max = self._config.get_oper_filter_attrs_max()
         start_time = time.time()
         for i in range(iterations):
-            rule = FunctionRule(
-                Function("eq", 2), Alias("entity_id"), Value(32))
+            # select all instances where id <= 4
+            rule = FunctionRule(Function("lte"), Alias("id"), Value(4))
             filter_ = Filter(rule)
-            self._proc.get_list_by_filter(filter_)
+            filtered = self._proc.get_list_by_filter(filter_)
+            size = len(filtered)
+            logging.info("\t\titeration: %i; found: %i;", i, size)
             pass
         time_total = time.time() - start_time
         logging.info(
@@ -114,8 +116,8 @@ class App:
             result = random.randint(0, 10000) / 100
         if type_name == cfg.ATTR_TYPE_STR:
             chars = string.ascii_letters + string.digits
-            result = ''.join(random.choice(chars) for _ in range(8))
+            result = "".join(random.choice(chars) for _ in range(8))
         if type_name == cfg.ATTR_TYPE_TXT:
             chars = string.ascii_letters + string.digits + " "
-            result = ''.join(random.choice(chars) for _ in range(512))
+            result = "".join(random.choice(chars) for _ in range(512))
         return result

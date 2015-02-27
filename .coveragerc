@@ -3,6 +3,7 @@ omit =
     prxgt/test*
     prxgt/domain/test*
     prxgt/domain/filter/test*
+    prxgt/domain/meta/test*
     prxgt/proc/test*
     prxgt/repo/test*
     prxgt/report/test*

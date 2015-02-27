@@ -1,14 +1,14 @@
 __author__ = 'Alex Gusev <alex@flancer64.com>'
+import json
 import logging
 import random
-import json
 
-import prxgt.const as const
 from prxgt.config import Config
-from prxgt.domain.meta.attribute import Attribute as MetaAttribute
 from prxgt.domain.attribute import Attribute
-from prxgt.repo.generator import Generator
 from prxgt.domain.instance import Instance, ATTR_ID_NAME
+from prxgt.domain.meta.attribute import Attribute as MetaAttribute
+from prxgt.repo.generator import Generator
+import prxgt.const as const
 
 
 TYPE_DEC = const.ATTR_TYPE_DEC
@@ -22,9 +22,11 @@ JSON_TYPE = 'type'
 
 
 class Repository(object):
+
     """
-    Repository contains meta data for domain (attribute names, types and values) and data itself. Repository data is
-    used to create test queries. Repository can be saved to file or loaded from file.
+    Repository contains meta data for domain (attribute names, types and
+    values) and data itself. Repository data is used to create test queries.
+    Repository can be saved to file or loaded from file.
     """
 
     def __init__(self, config: Config):
@@ -35,7 +37,10 @@ class Repository(object):
         self._attrs_available = {}
         """ Registry for all available attributes (meta: name and type). """
         self._attrs_used = {}
-        """ Registry for all attributes used in instances (meta: name and type). """
+        """
+        Registry for all attributes used in instances (meta: name and type)
+        .
+        """
         self._instances = {}
         """ Registry for the generated or loaded instances """
         self._types = {0: TYPE_DEC, 1: TYPE_INT, 2: TYPE_STR, 3: TYPE_TXT}
@@ -106,8 +111,9 @@ class Repository(object):
                 inst.add_attr(attr)
             inst.id = i
             self._instances[i] = inst
-        logging.info("\ttotal %i instances are created, %i different attributes are used;", total,
-                     len(self._attrs_used))
+        msg = "\ttotal %i instances are created, " + \
+            "%i different attributes are used;"
+        logging.info(msg, total, len(self._attrs_used))
         return
 
     def save(self, filename: str):
@@ -117,7 +123,8 @@ class Repository(object):
             attr = self._attrs_available[key]
             assert isinstance(attr, MetaAttribute)
             obj[JSON_META][attr.name] = {JSON_TYPE: attr.type}
-        # get all instances by id and save it into dictionary to convert to JSON
+        # get all instances by id and save it into dictionary to convert to
+        # JSON
         for key in self._instances:
             one = self._instances[key]
             assert isinstance(one, Instance)
